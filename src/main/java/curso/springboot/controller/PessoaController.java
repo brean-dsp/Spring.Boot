@@ -55,7 +55,7 @@ public class PessoaController {
 	}
 	
 	
-	//Método que cria a função de editar os dados da tabela
+	//Método que cria a função de editar os dados de uma pessoa cadastrada da tabela e banco de dados
 	
 	//@GetMapping é uma anotação para resumir o "@RequestMapping(method = RequestMethod.GET"
 	
@@ -66,6 +66,20 @@ public class PessoaController {
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoaobj", pessoa.get());
+		return modelAndView;
+		
+	}
+	
+	
+	//Método que cria a função de excluir os dados de um usuario da tabela e banco de dados
+	@GetMapping("/removerpessoa/{idpessoa}")
+	public ModelAndView excluir(@PathVariable("idpessoa") Long idpessoa) {
+		
+		pessoaRepository.deleteById(idpessoa);
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		modelAndView.addObject("pessoas", pessoaRepository.findAll());
+		modelAndView.addObject("pessoaobj", new Pessoa());
 		return modelAndView;
 		
 	}
