@@ -4,28 +4,55 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet"
+	href="/materialize/css/materialize.css" media="screen,projection" />
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" href="/materialize.min.css"
+	media="screen,projection" />
 </head>
 <body>
 	<h1>Cadastro de Pessoas</h1>
 
-	<form action="salvarpessoa" method="post">
 
-		<label>Nome:</label> <input name="nome"> <label>Sobrenome:</label>
-		<input name="sobrenome"> <label>Idade:</label> <input
-			name="idade"> <input type="submit" value="Salvar">
+	<!-- Início Formulario -->
+	<form action="salvarpessoa" method="post" th:object=${pessoaobj}>
 
+		<label>Id:</label>
+		<input name="id" th:field="*{id}" readonly="readonly">
+		<label>Nome:</label>
+		<input name="nome" th:field="*{nome}"> 
+		<label>Sobrenome:</label>
+		<input name="sobrenome" th:field="*{sobrenome}"> 
+		<label>Idade:</label> 
+		<input name="idade" th:field="*{idade}"> 
+		<input class="waves-effect waves-light btn-small" type="submit" value="Salvar">
+
+
+		<!-- Fim Formulario -->
 	</form>
-	
+
 	<a href="/listapessoas">Lista</a>
 
+
+	<!-- Início Tabela  -->
 	<table>
-		<tr th:each = "pessoa : ${pessoas}">
-		<td th:text = "${pessoa.id}"></td>
-		<td th:text = "${pessoa.nome}"></td>
-		<td th:text = "${pessoa.sobrenome}"></td>
-		<td th:text = "${pessoa.idade}"></td>
+		<tr th:each="pessoa : ${pessoas}">
+			<td th:text="${pessoa.id}"></td>
+			<td th:text="${pessoa.nome}"></td>
+			<td th:text="${pessoa.sobrenome}"></td>
+			<td th:text="${pessoa.idade}"></td>
+			<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a></td>
 		</tr>
 	</table>
+	<!-- Fim Tabela  -->
 
+	<!--JavaScript at end of body for optimized loading-->
+	<script type="text/javascript" src="materialize/js/materialize.js"></script>
+	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 </body>
 </html>
