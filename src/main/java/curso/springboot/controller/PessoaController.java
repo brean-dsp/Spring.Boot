@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import curso.springboot.model.Pessoa;
@@ -82,6 +84,20 @@ public class PessoaController {
 		modelAndView.addObject("pessoaobj", new Pessoa());
 		return modelAndView;
 		
+	}
+	
+	
+	
+	//Método que cria a função de pesquisar um nome cadastrado da tabela e banco de dados
+	
+	//@PostMapping é uma anotação para resumir o "@RequestMapping(method = RequestMethod.POST
+	@PostMapping("**/pesquisarpessoa")
+	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
+	
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa));
+		modelAndView.addObject("pessoaobj", new Pessoa());
+		return modelAndView;
 	}
 	
 }

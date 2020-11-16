@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 
 <!--Import Google Icon Font-->
@@ -19,7 +19,7 @@
 	<h1>Cadastro de Pessoas</h1>
 
 
-	<!-- Início Formulario -->
+	<!-- InÃ­cio Formulario -->
 	<form action="salvarpessoa" method="post" th:object=${pessoaobj}>
 
 		<label>Id:</label>
@@ -32,14 +32,26 @@
 		<input name="idade" th:field="*{idade}"> 
 		<input class="waves-effect waves-light btn-small" type="submit" value="Salvar">
 
-
 		<!-- Fim Formulario -->
 	</form>
 
+
+	<br/>
+	<br/>
 	<a href="/listapessoas">Lista</a>
+	<br/>
+	<br/>
+	
+	<form action="pesquisarpessoa" method="post">
+	<label>Pesquisa por nome:</label>
+	<input name="nomepesquisa">
+	<input class="waves-effect waves-light btn-small" type="submit" value="Buscar">
+	</form>
 
 
-	<!-- Início Tabela  -->
+	<br/>
+	<br/>
+	<!-- InÃ­cio Tabela  -->
 	<table>
 		<tr th:each="pessoa : ${pessoas}">
 			<td th:text="${pessoa.id}"></td>
