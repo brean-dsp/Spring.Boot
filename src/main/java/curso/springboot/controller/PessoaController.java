@@ -21,11 +21,13 @@ public class PessoaController {
 	@Autowired
 	private PessoaRepository pessoaRepository;
 	
-	//Método que direciona para a pagina de cadastro e retorna os campos vazio do objeto Pessoa
+	//Método que direciona para a pagina de cadastro assim que é logado o sistema e retorna os campos vazio do objeto Pessoa
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
 	public ModelAndView inicio() {
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoaobj", new Pessoa());
+		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
+		modelAndView.addObject("pessoas", pessoasIt);
 		return modelAndView;
 	}
 	
