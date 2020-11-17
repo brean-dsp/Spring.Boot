@@ -21,13 +21,19 @@ public class PessoaController {
 	@Autowired
 	private PessoaRepository pessoaRepository;
 	
-	//Método que direciona para a pagina de cadastro assim que é logado o sistema e retorna os campos vazio do objeto Pessoa
+	//Método que direciona para a pagina de cadastro assim que é logado o sistema 
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
 	public ModelAndView inicio() {
+		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		
 		modelAndView.addObject("pessoaobj", new Pessoa());
+		
+		//retorna a tabela preenchida com os dados postados do objeto Pessoa
 		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
+		
 		modelAndView.addObject("pessoas", pessoasIt);
+		
 		return modelAndView;
 	}
 	
@@ -38,7 +44,9 @@ public class PessoaController {
 		pessoaRepository.save(pessoa);
 		
 		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
+		
 		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
+		
 		andView.addObject("pessoas", pessoasIt);
 		andView.addObject("pessoaobj", new Pessoa());
 		
@@ -51,7 +59,9 @@ public class PessoaController {
 	public ModelAndView pessoas() {
 		
 		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
+		
 		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
+		
 		andView.addObject("pessoas", pessoasIt);
 		andView.addObject("pessoaobj", new Pessoa());
 		
@@ -69,7 +79,9 @@ public class PessoaController {
 		Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa);
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		
 		modelAndView.addObject("pessoaobj", pessoa.get());
+		
 		return modelAndView;
 		
 	}
@@ -82,8 +94,10 @@ public class PessoaController {
 		pessoaRepository.deleteById(idpessoa);
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		
 		modelAndView.addObject("pessoas", pessoaRepository.findAll());
 		modelAndView.addObject("pessoaobj", new Pessoa());
+		
 		return modelAndView;
 		
 	}
@@ -97,9 +111,26 @@ public class PessoaController {
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
 	
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		
 		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa));
 		modelAndView.addObject("pessoaobj", new Pessoa());
+		
 		return modelAndView;
+	}
+	
+	
+	//Método que direciona para a página telefones e exibe os números para cada usuário
+	@GetMapping("/telefones/{idpessoa}")
+	public ModelAndView telefones(@PathVariable("idpessoa") Long idpessoa) {
+		
+		Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa);
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+		
+		modelAndView.addObject("pessoaobj", pessoa.get());
+		
+		return modelAndView;
+		
 	}
 	
 }
