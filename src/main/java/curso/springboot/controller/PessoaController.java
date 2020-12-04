@@ -178,6 +178,20 @@ public class PessoaController {
 //Consulta a pessoa no banco de dados
 	Pessoa pessoa = pessoaRepository.findById(pessoaid).get();
 	
+//Validação de telefone
+	if(telefone != null && (telefone.getNumero() != null && telefone.getNumero().isEmpty()) || telefone.getNumero() == null) {
+		//caso o valor da condição for nula retorna para a pagina de cadasto juntos com os objetos 
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+		modelAndView.addObject("pessoaobj", pessoa);
+		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
+//mensagem de erro que aparece na tela
+		List<String> msg = new ArrayList<String>();
+		msg.add("Número de telefone deve ser informado!");
+		modelAndView.addObject("msg", msg);
+		
+		return modelAndView;
+	}
+	
 //Pega o telefone digitado na tela e adiciona a pessoa para poder identificar 
 	telefone.setPessoa(pessoa);	
 	
